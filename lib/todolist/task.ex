@@ -1,6 +1,6 @@
 defmodule TodoList.Task do
   use Ecto.Schema
-  
+  import Poison 
   alias TodoList.Repo
 
   schema "tasks" do
@@ -22,6 +22,9 @@ defmodule TodoList.Task do
 
   def show_task(id) do
     Repo.get!(TodoList.Task, id)
+    |> convert_to_map
+    |> drop_meta
+    |> encode_poison
   end
 
   def update_task(id, changeset) do
@@ -37,8 +40,20 @@ defmodule TodoList.Task do
   def delete_task(id) do
     task = Repo.get!(TodoList.Task, id)
     case Repo.delete task do
-      {:ok, struct} -> "Deleted #{id} task"
+      {:ok, struct} -> "Deleted #{id} numbered task"
       {:error, changeset} -> "Could not delete #{id} task"
     end
+  end
+
+  defp convert_to_map(task) do
+    Map.from_struct(task)
+  end
+
+  defp drop_meta(task) do
+    Map.drop(task, [:__meta__])
+  end
+
+  defp encode_poison(task) do
+    Poison.encode!(task)
   end
 end
