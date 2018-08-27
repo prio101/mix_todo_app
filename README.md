@@ -1,8 +1,8 @@
 # TodoList
 
 > Mix ecto project for todo list.
-- simple todo app
-- with ecto, poison
+---
+Simple todo app created for working with Ecto over the small mix created project. 
 
 
 ## Installation
@@ -12,9 +12,11 @@
   todolist: "~> 0.1.0"
 ]
 ```
-git clone the project and then just run `mix deps.get`
+`git clone project-url` the project and then just
+`cd project` and run  
+`mix deps.get`
 
-```shell
+```bash
 > iex -S mix
 
 > TodoList.Task.tasks
